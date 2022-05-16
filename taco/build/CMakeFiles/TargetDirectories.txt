@@ -1,0 +1,3 @@
+/Users/albert/tara/taco/build/CMakeFiles/timer.dir
+/Users/albert/tara/taco/build/CMakeFiles/edit_cache.dir
+/Users/albert/tara/taco/build/CMakeFiles/rebuild_cache.dir

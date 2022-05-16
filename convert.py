@@ -36,7 +36,7 @@ class TypeConversion:
 def get_rows(csv_file_name: str, row_types: List[int]):
     tc = TypeConversion()
     with open(csv_file_name, mode='r') as csv_file:
-        reader = csv.reader(csv_file, delimiter=',', escapechar='\\')
+        reader = csv.reader(csv_file, delimiter=',', escapechar='\\', quotechar='"', doublequote=False, quoting=csv.QUOTE_MINIMAL)
         for i, row in enumerate(reader):
             output_row = []
             for value, value_type in zip(row, row_types):
@@ -49,7 +49,7 @@ def get_rows(csv_file_name: str, row_types: List[int]):
                         output_value = tc.convert_string(value)
                 except ValueError:
                     print(row)
-                    raise ValueError(f'failed to parse row {i} in {csv_file_name}')
+                    print(f'failed to parse row {i} in {csv_file_name}')
                 output_row.append(output_value)
             yield output_row
 
@@ -57,7 +57,7 @@ def convert_csv(csv_file_name: str, row_types: List[int], output_file_name: str,
     if has_unique_rows:
         with open(output_file_name, mode='w') as output_file:
             for output_row in get_rows(csv_file_name, row_types):
-                output_row.append(1.0)
+                output_row.append(1)
                 output_file.write(' '.join(str(v) for v in output_row))
                 output_file.write('\n')
     else:
@@ -73,7 +73,7 @@ def convert_csv(csv_file_name: str, row_types: List[int], output_file_name: str,
         with open(output_file_name, mode='w') as output_file:
             for output_tup in row_order:
                 output_row = list(output_tup)
-                output_row.append(float(row_freq[output_tup]))
+                output_row.append(row_freq[output_tup])
                 output_file.write(' '.join(str(v) for v in output_row))
                 output_file.write('\n')
 
@@ -100,13 +100,14 @@ def parse_imdb_schema(schema_path: str):
             schema[curr_table_name] = curr_row_types
         return schema
 
-def generate_imdb_tensors(imdb_dir: str, output_dir: str):
+def generate_imdb_tensors(imdb_dir: str, output_dir: str, tables=None):
     schema_path = os.path.join(imdb_dir, 'schematext.sql')
     schema = parse_imdb_schema(schema_path)
     for table_name, row_types in schema.items():
-        csv_file_name = os.path.join(imdb_dir, table_name + '.csv')
-        output_file_name = os.path.join(output_dir, table_name + '.tns')
-        print(f'generating {output_file_name}')
-        convert_csv(csv_file_name, row_types, output_file_name, True)
+        if tables and table_name in tables:
+            csv_file_name = os.path.join(imdb_dir, table_name + '.csv')
+            output_file_name = os.path.join(output_dir, table_name + '.tns')
+            print(f'generating {output_file_name}')
+            convert_csv(csv_file_name, row_types, output_file_name, True)
 
-generate_imdb_tensors('imdb', 'imdb_tns')
+generate_imdb_tensors('imdb', 'imdb_tns', {'title'})

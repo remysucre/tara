@@ -1,0 +1,23 @@
+schema = {
+    'aka_name': [0, 0, 3, 2, 2, 2, 2, 2],
+    'aka_title': [0, 0, 3, 2, 0, 0, 2, 0, 0, 0, 2, 2],
+    'cast_info': [0, 0, 0, 0, 3, 0, 0],
+    'char_name': [0, 3, 2, 0, 2, 2, 2],
+    'comp_cast_type': [0, 2],
+    'company_name': [0, 3, 2, 0, 2, 2, 2],
+    'company_type': [0, 2],
+    'complete_cast': [0, 0, 0, 0],
+    'info_type': [0, 2],
+    'keyword': [0, 3, 2],
+    'kind_type': [0, 2],
+    'link_type': [0, 2],
+    'movie_companies': [0, 0, 0, 0, 3],
+    'movie_info_idx': [0, 0, 0, 3, 2],
+    'movie_keyword': [0, 0, 0],
+    'movie_link': [0, 0, 0, 0],
+    'name': [0, 3, 2, 0, 2, 2, 2, 2, 2],
+    'role_type': [0, 2],
+    'title': [0, 3, 2, 0, 0, 0, 2, 0, 0, 0, 2, 2],
+    'movie_info': [0, 0, 0, 3, 3],
+    'person_info': [0, 0, 0, 3, 3]
+}
